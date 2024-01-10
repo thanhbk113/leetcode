@@ -1,40 +1,51 @@
 package main
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 func minWindow(s string, t string) string {
-	charmap := make([]int, 128)
+	need := make(map[byte]int)
+	window := make(map[byte]int)
 	for i := 0; i < len(t); i++ {
-		charmap[t[i]]++
+		need[t[i]]++
 	}
-	end, begin, head, d, counter := 0, 0, 0, math.MaxInt, len(t)
-	for end < len(s) {
-		if charmap[s[end]] > 0 {
-			counter--
-		}
-		charmap[s[end]]--
-		end++
+	left, right := 0, 0
+	valid := 0
+	start, length := 0, math.MaxInt32
 
-		for counter == 0 {
-			if end-begin < d {
-				head = begin
-				d = end - head
+	for right < len(s) {
+		c := s[right]
+		right++
+		if _, ok := need[c]; ok {
+			window[c]++
+			if window[c] == need[c] {
+				valid++
 			}
-			charmap[s[begin]]++
-			if charmap[s[begin]] > 0 {
-				counter++
+		}
+		for valid == len(need) {
+			if right-left < length {
+				start = left
+				length = right - left
 			}
-			begin++
+			d := s[left]
+			left++
+			if _, ok := need[d]; ok {
+				if window[d] == need[d] {
+					valid--
+				}
+				window[d]--
+			}
 		}
 	}
-
-	if d == math.MaxInt {
+	if length == math.MaxInt32 {
 		return ""
 	}
-
-	return s[head : head+d]
+	return s[start : start+length]
 }
 
 func main() {
-	minWindow("ADOBECODEBANC", "ABC")
+	s := "ADOBECODEBANC"
+	fmt.Println(minWindow(s, "ABC"))
 }
