@@ -5,13 +5,10 @@ import "fmt"
 func dailyTemperatures(temperatures []int) []int {
 	size := len(temperatures)
 	ans := make([]int, size)
-	stack := make([]int, 0) // Sử dụng stack để lưu trữ index của các ngày chưa tìm được kết quả
+	stack := make([]int, 0)
 
 	for i := 0; i < size; i++ {
 		for len(stack) > 0 && temperatures[i] > temperatures[stack[len(stack)-1]] {
-			fmt.Println("~ temperatures[stack[len(stack)-1]] : ", temperatures[stack[len(stack)-1]])
-			fmt.Println("~  temperatures[i] : ", temperatures[i])
-			fmt.Println("~ stack before: ", stack)
 
 			idx := stack[len(stack)-1]
 			stack = stack[:len(stack)-1]

@@ -26,7 +26,7 @@ func partition(arr []int, low, high int) int {
 }
 
 func main() {
-	arr := []int{4, 2, 7, 5, 1, 6, 3}
+	arr := []int{4, 2, 7, 5, 1, 6}
 	n := len(arr)
 
 	fmt.Println("Unsorted array:", arr)
