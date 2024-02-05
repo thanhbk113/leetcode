@@ -4,15 +4,6 @@ import (
 	"fmt"
 )
 
-func findMaxArr(nums []int) int {
-	maxV := nums[0]
-	for i := 1; i < len(nums); i++ {
-		maxV = max(maxV, nums[i])
-	}
-
-	return maxV
-}
-
 func firstMissingPositive(nums []int) int {
 	n := len(nums)
 
@@ -31,7 +22,7 @@ func firstMissingPositive(nums []int) int {
 		}
 	}
 
-	return findMaxArr(nums) + 1
+	return n + 1
 }
 
 func main() {
