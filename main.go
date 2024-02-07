@@ -2,34 +2,35 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
-func longestPalindrome(s string) string {
-	n := len(s)
+func countFreqChar(s string) string {
+	count := make([]int, 26)
 
-	startStr, endStr := 0, 0
-
-	for i := 0; i < n; i++ {
-		findPali(s, i, i, &startStr, &endStr)
-		findPali(s, i, i+1, &startStr, &endStr)
+	for _, val := range s {
+		count[val-'a']++
 	}
 
-	return s[startStr : endStr+1]
+	key := ""
+
+	for _, c := range count {
+		key += strconv.Itoa(c) + "/"
+	}
+	return key
 }
 
-func findPali(s string, l, r int, startStr, endStr *int) {
-	for l >= 0 && r < len(s) && s[l] == s[r] {
-		if *endStr-*startStr < r-l {
-			*startStr, *endStr = l, r
-		}
-		l--
-		r++
+func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
 	}
+
+	return countFreqChar(s) == countFreqChar(t)
 }
 
 func main() {
-	s := "babad"
+	s := "aacc"
+	t := "ccac"
 
-	fmt.Println(longestPalindrome(s))
-
+	fmt.Println(isAnagram(s, t))
 }
