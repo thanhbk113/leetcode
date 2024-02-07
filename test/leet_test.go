@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"strconv"
 	"testing"
 )
 
@@ -18,22 +20,32 @@ import (
 // 	return false
 // }
 
-func containsDuplicate(nums []int) bool {
-	size := len(nums)
-	check := make(map[int]bool, size)
+func countFreqChar(s string) string {
+	count := make([]int, 26)
 
-	for i := 0; i < size; i++ {
-		if check[nums[i]] {
-			return true
-		} else {
-			check[nums[i]] = true
-		}
+	for _, val := range s {
+		count[val-'a']++
 	}
 
-	return false
+	key := ""
+
+	for _, c := range count {
+		key += strconv.Itoa(c) + "/"
+	}
+	return key
+}
+
+func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+
+	return countFreqChar(s) == countFreqChar(t)
 }
 
 func BenchmarkContainsDuplicate(b *testing.B) {
-	nums := []int{1, 2, 3, 1}
-	containsDuplicate(nums)
+	s := "aacc"
+	t := "ccac"
+
+	fmt.Println(isAnagram(s, t))
 }
