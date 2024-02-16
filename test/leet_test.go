@@ -2,50 +2,31 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 	"testing"
 )
 
-// using sort
-// func containsDuplicate(nums []int) bool {
+func generateParenthesis(n int) []string {
+	ans := make([]string, 0)
 
-// 	sort.Ints(nums)
+	recursionParenthesis(&ans, n, 0, 0, "")
 
-// 	for i := 0; i < len(nums); i++ {
-// 		if nums[i] == nums[i+1] {
-// 			return true
-// 		}
-// 	}
-
-// 	return false
-// }
-
-func countFreqChar(s string) string {
-	count := make([]int, 26)
-
-	for _, val := range s {
-		count[val-'a']++
-	}
-
-	key := ""
-
-	for _, c := range count {
-		key += strconv.Itoa(c) + "/"
-	}
-	return key
+	return ans
 }
 
-func isAnagram(s string, t string) bool {
-	if len(s) != len(t) {
-		return false
+func recursionParenthesis(ans *[]string, n, open, close int, cur_string string) {
+	if len(cur_string) == n*2 {
+		*ans = append(*ans, cur_string)
+		return
 	}
 
-	return countFreqChar(s) == countFreqChar(t)
+	if open < n {
+		recursionParenthesis(ans, n, open+1, close, cur_string+"(")
+	}
+	if close < open {
+		recursionParenthesis(ans, n, open, close+1, cur_string+")")
+	}
 }
 
 func BenchmarkContainsDuplicate(b *testing.B) {
-	s := "aacc"
-	t := "ccac"
-
-	fmt.Println(isAnagram(s, t))
+	fmt.Println(generateParenthesis(3))
 }
