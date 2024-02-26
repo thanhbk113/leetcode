@@ -2,36 +2,32 @@ package main
 
 import "fmt"
 
-func quickSort(arr []int, low, high int) {
-	if low < high {
-		pivotIndex := partition(arr, low, high)
-		quickSort(arr, low, pivotIndex-1)
-		quickSort(arr, pivotIndex+1, high)
+func quicksort(arr []int) []int {
+	if len(arr) < 2 {
+		return arr
 	}
-}
 
-func partition(arr []int, low, high int) int {
-	pivot := arr[high]
-	i := low - 1
+	pivot := arr[0]
 
-	for j := low; j < high; j++ {
-		if arr[j] < pivot {
-			i++
-			arr[i], arr[j] = arr[j], arr[i]
+	var less, greater []int
+
+	for _, num := range arr[1:] {
+		if num <= pivot {
+			less = append(less, num)
+		} else {
+			greater = append(greater, num)
 		}
 	}
 
-	arr[i+1], arr[high] = arr[high], arr[i+1]
-	return i + 1
+	less = quicksort(less)
+	greater = quicksort(greater)
+
+	return append(append(less, pivot), greater...)
 }
 
 func main() {
-	arr := []int{4, 2, 7, 5, 1, 6}
-	n := len(arr)
-
+	arr := []int{7, 2, 1, 6, 8, 5, 3, 4}
 	fmt.Println("Unsorted array:", arr)
-
-	quickSort(arr, 0, n-1)
-
+	arr = quicksort(arr)
 	fmt.Println("Sorted array:", arr)
 }
