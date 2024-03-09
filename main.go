@@ -1,5 +1,13 @@
 package main
 
+import "fmt"
+
+// Định nghĩa cấu trúc ListNode
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -7,54 +15,36 @@ package main
  *     Next *ListNode
  * }
  */
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	dummyNode := &ListNode{Val: 0}
+	carry := 0
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
-
-func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
-	if list1 != nil && list2 != nil {
-		return nil
-	}
-
-	merge := &ListNode{}
-
-	for list1 != nil && list2 != nil {
-		if list1.Val < list2.Val {
-			Append(merge, list1)
-		} else {
-			Append(merge, list2)
+	for node := dummyNode; l1 != nil || l2 != nil || carry > 0; node = node.Next {
+		if l1 != nil {
+			carry += l1.Val
+			l1 = l1.Next
 		}
-		merge = merge.Next
-		list1 = list1.Next
-		list2 = list2.Next
+
+		if l2 != nil {
+			carry += l2.Val
+			l2 = l2.Next
+		}
+		node.Next = &ListNode(carry % 10)
+		carry /= 10
 	}
-	return merge
+
+	return dummyNode.Next
 }
 
-func Append(merge *ListNode, node *ListNode) {
-	if merge == nil {
-		merge = node
-		merge.Next = nil
-	}
-	merge.Next = node
-	merge.Next.Next = nil
-}
-
+// Hàm main
 func main() {
-	head := &ListNode{
-		Val:  1,
-		Next: nil,
+	// Test cases
+	l1 := &ListNode{Val: 2, Next: &ListNode{Val: 4, Next: &ListNode{Val: 3}}}
+	l2 := &ListNode{Val: 5, Next: &ListNode{Val: 6, Next: &ListNode{Val: 4}}}
+	sum := addTwoNumbers(l1, l2)
+	for sum != nil {
+		fmt.Print(sum.Val, " ")
+		sum = sum.Next
 	}
-	n := 4
-	curr := head
-	for i := 2; i <= n; i++ {
-		newNode := &ListNode{
-			Val:  i,
-			Next: nil,
-		}
-		curr.Next = newNode
-		curr = newNode
-	}
+	fmt.Println()
 }
