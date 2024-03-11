@@ -15,36 +15,72 @@ type ListNode struct {
  *     Next *ListNode
  * }
  */
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	dummyNode := &ListNode{Val: 0}
-	carry := 0
+func reorderList(head *ListNode) {
+	if head == nil && head.Next == nil {
+		return
+	}
+	slow := head
+	fast := head
 
-	for node := dummyNode; l1 != nil || l2 != nil || carry > 0; node = node.Next {
-		if l1 != nil {
-			carry += l1.Val
-			l1 = l1.Next
-		}
-
-		if l2 != nil {
-			carry += l2.Val
-			l2 = l2.Next
-		}
-		node.Next = &ListNode(carry % 10)
-		carry /= 10
+	for fast != nil && fast.Next != nil {
+		slow = slow.Next
+		fast = fast.Next.Next
 	}
 
-	return dummyNode.Next
+	secondHalf := reverseList(slow.Next)
+	slow.Next = nil
+
+	p1 := head
+	p2 := secondHalf
+
+	for p2 != nil {
+		next1 := p1.Next
+		next2 := p2.Next
+		p1.Next = p2
+		p2.Next = next1
+		p1 = next1
+		p2 = next2
+	}
+}
+
+func reverseList(head *ListNode) *ListNode {
+	var prev *ListNode
+	curr := head
+
+	for curr != nil {
+		next := curr.Next
+		curr.Next = prev
+		prev = curr
+		curr = next
+	}
+
+	return prev
 }
 
 // Hàm main
 func main() {
-	// Test cases
-	l1 := &ListNode{Val: 2, Next: &ListNode{Val: 4, Next: &ListNode{Val: 3}}}
-	l2 := &ListNode{Val: 5, Next: &ListNode{Val: 6, Next: &ListNode{Val: 4}}}
-	sum := addTwoNumbers(l1, l2)
-	for sum != nil {
-		fmt.Print(sum.Val, " ")
-		sum = sum.Next
+	head := &ListNode{Val: 1}
+	current := head
+	for i := 2; i <= 5; i++ {
+		node := &ListNode{Val: i}
+		current.Next = node
+		current = node
 	}
-	fmt.Println()
+
+	fmt.Println("Danh sách liên kết ban đầu:")
+	printList(head)
+
+	reorderList(head)
+
+	fmt.Println("Danh sách liên kết sau khi sắp xếp lại:")
+	printList(head)
+}
+
+func printList(head *ListNode) {
+	current := head
+	for current != nil {
+		fmt.Printf("%d -> ", current.Val)
+		current = current.Next
+	}
+	fmt.Println("nil")
 }
