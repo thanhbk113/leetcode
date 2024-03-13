@@ -20,9 +20,10 @@ func isValid(s string) bool {
 			stack = stack[:len(stack)-1]
 		}
 	}
+
 	return len(stack) == 0
 }
+
 func main() {
-	s := "()[]{}"
-	fmt.Println(isValid(s))
+	fmt.Println(isValid("{}[]()"))
 }
