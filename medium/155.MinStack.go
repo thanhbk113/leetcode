@@ -1,6 +1,3 @@
-package main
-
-import "fmt"
 
 type MinStack struct {
 	stack    []int
@@ -67,12 +64,3 @@ func (this *MinStack) GetMin() int {
  * param_3 := obj.Top();
  * param_4 := obj.GetMin();
  */
-func main() {
-	a := Constructor()
-
-	a.Push(-2)
-	a.Push(0)
-	a.Push(-3)
-	a.Pop()
-	fmt.Println(a.Top())
-}
