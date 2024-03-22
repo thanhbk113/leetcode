@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"strconv"
 )
@@ -44,9 +43,4 @@ func caculatorDigit(val1, val2 int, digit string) int {
 	}
 
 	return int(math.Round(float64(ans)))
-}
-
-func main() {
-	tokens := []string{"4", "13", "5", "/", "+"}
-	fmt.Println(evalRPN(tokens))
 }
