@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func calculate(s string) int {
 	if len(s) == 0 {
 		return 0
@@ -31,9 +29,4 @@ func calculate(s string) int {
 
 	result += sign * num
 	return result
-}
-
-func main() {
-	s := "3-(2+2)+5"
-	fmt.Println(calculate(s))
 }
