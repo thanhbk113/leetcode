@@ -49,8 +49,3 @@ func sumAll(all []int) int {
 	}
 	return sum
 }
-
-func main() {
-	s := "3+5 / 2 "
-	fmt.Println(calculate(s))
-}
