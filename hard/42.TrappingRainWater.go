@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func trap(h []int) int {
 	n := len(h)
 	waters := 0
@@ -20,9 +18,4 @@ func trap(h []int) int {
 	}
 
 	return waters
-}
-
-func main() {
-	heights := []int{1, 0, 1, 0, 2, 0, 1}
-	fmt.Println(trap(heights))
 }
